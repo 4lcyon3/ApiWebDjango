@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-
+from django.views.generic.base import RedirectView
 from core import settings
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -24,6 +24,7 @@ from rest_framework_simplejwt.views import (
 )
 
 urlpatterns = [
+    path("", RedirectView.as_view(url="/admin/", permanent=False)),
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
 ]

@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.contrib.auth.hashers import make_password
 from .models import (
     District, School, Teacher, Student,
     Report, MLModelVersion, Prediction, TeacherStudentPrediction
@@ -24,10 +25,21 @@ class SchoolSerializer(serializers.ModelSerializer):
 
 class TeacherSerializer(serializers.ModelSerializer):
     school = SchoolSerializer(read_only=True)
+    password = serializers.CharField(write_only=True, required=False)
 
     class Meta:
         model = Teacher
-        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'school']
+        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'password', 'school']
+
+    def create(self, validated_data):
+        if 'password' in validated_data:
+            validated_data['password'] = make_password(validated_data['password'])
+        return super().create(validated_data)
+
+    def update(self, instance, validated_data):
+        if 'password' in validated_data:
+            validated_data['password'] = make_password(validated_data['password'])
+        return super().update(instance, validated_data)
 
 
 class StudentSerializer(serializers.ModelSerializer):
