@@ -5,10 +5,6 @@ from .models import (
     Report, MLModelVersion, Prediction, TeacherStudentPrediction
 )
 
-
-# =====================
-# SERIALIZERS BÁSICOS
-# =====================
 class DistrictSerializer(serializers.ModelSerializer):
     class Meta:
         model = District

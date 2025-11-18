@@ -29,6 +29,8 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
             'refresh': str(refresh),
             'access': str(refresh.access_token), # type: ignore
             'username': user.username,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
             'school': user.school.fullname, # type: ignore
         }
         return data

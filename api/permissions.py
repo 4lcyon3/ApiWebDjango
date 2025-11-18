@@ -12,8 +12,6 @@ class IsTeacher(permissions.BasePermission):
 
 class IsOwnerTeacherOrAdmin(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
-        # Admin puede todo
         if request.user.is_staff:
             return True
-        # Profesores solo sobre sus propios registros
         return hasattr(request.user, 'teacher') and obj.teacher == request.user
