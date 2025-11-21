@@ -2,6 +2,7 @@ from django.urls import path, include
 from rest_framework import routers
 from rest_framework_simplejwt.views import TokenRefreshView
 
+from api.controllers.views_predict import predict_student_performance
 from api.views import api_overview
 from api.controllers.views_teacher import TeacherViewSet
 from api.controllers.views_student import StudentViewSet
@@ -19,9 +20,10 @@ router.register(r'schools', SchoolViewSet, basename='school')
 router.register(r'ml/models', MLModelVersionViewSet, basename='ml-model')
 router.register(r'ml/predictions', PredictionViewSet, basename='ml-prediction')
 
+
 urlpatterns = [
     path('', api_overview, name='api-overview'),
-
+    path("ml/predict/<int:student_id>/", predict_student_performance),
     path('token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 

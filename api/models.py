@@ -46,6 +46,9 @@ class Student(models.Model):
     last_name = models.CharField(max_length=50, default="SinApellido")
     puntaje = models.IntegerField(default=0, null=True, blank=True)
     promedio = models.DecimalField(max_digits=5, decimal_places=2, default=0.00) # type: ignore
+    persistente_total = models.IntegerField(default=0)
+    competente_total = models.IntegerField(default=0)
+    observador_total = models.IntegerField(default=0)
     cant_evaluaciones = models.IntegerField(default=0, null=True, blank=True)
     score_total = models.IntegerField(default=0, null=True, blank=True)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name='students')

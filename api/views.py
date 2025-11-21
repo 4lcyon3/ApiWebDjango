@@ -24,6 +24,6 @@ def api_overview(request):
                 "filter": "/api/reports/filter/?week={num}&school={id}"
             },
             "ml_models": "/api/ml/models/",
-            "predictions": "/api/ml/predictions/"
+            "predictions": "/api/ml/predictions/",
         }
     })

@@ -39,47 +39,19 @@ class TeacherSerializer(serializers.ModelSerializer):
 
 
 class StudentSerializer(serializers.ModelSerializer):
-    teacher = TeacherSerializer(read_only=True)
-    school = SchoolSerializer(read_only=True)
-
     class Meta:
         model = Student
-        fields = '__all__'
-
+        fields = [
+            'id', 'first_name', 'last_name',
+            'puntaje', 'promedio', 'score_total', 'cant_evaluaciones',
+            'persistente_total', 'competente_total', 'observador_total',
+            'teacher', 'school',
+        ]
 
 class ReportSerializer(serializers.ModelSerializer):
-    teacher = TeacherSerializer(read_only=True)
-    student = StudentSerializer(read_only=True)
-    student_id = serializers.PrimaryKeyRelatedField(
-        queryset=Student.objects.all(), source='student', write_only=True
-    )
-
     class Meta:
         model = Report
-        fields = [
-            'id',
-            'teacher',
-            'student',
-            'student_id',
-            'persistente',
-            'competente',
-            'observador',
-            'score_total',
-            'upload_date',
-            'week_number',
-            'created_at'
-        ]
-        read_only_fields = ['id', 'score_total', 'upload_date', 'week_number', 'created_at']
-
-    def create(self, validated_data):
-        """
-        Crea un nuevo reporte calculando automáticamente el score_total
-        y vinculándolo al docente autenticado.
-        """
-        teacher = self.context['request'].user
-        student = validated_data.pop('student')
-        report = Report.objects.create(teacher=teacher, student=student, **validated_data)
-        return report
+        fields = "__all__"
 
 class MLModelVersionSerializer(serializers.ModelSerializer):
     class Meta:
