@@ -43,6 +43,7 @@ class Teacher(AbstractUser):
 class Student(models.Model):
     first_name = models.CharField(max_length=50, default="SinNombre")
     last_name = models.CharField(max_length=50, default="SinApellido")
+    section = models.CharField(max_length=50, blank=True, null=True)
     puntaje = models.IntegerField(default=0, null=True, blank=True)
     promedio = models.DecimalField(max_digits=5, decimal_places=2, default=0.00) # type: ignore
     persistente_total = models.IntegerField(default=0)
