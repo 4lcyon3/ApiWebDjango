@@ -21,7 +21,5 @@ class StudentViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=["post"])
     def predict(self, request, pk=None):
         student = self.get_object()
-        # aquí llamas tu modelo ML
-        # ejemplo: predict(student.persistente_total, student.competente_total, student.observador_total)
         resultado = {"mensaje": f"Predicción para {student.first_name} {student.last_name}"}
         return Response(resultado)
