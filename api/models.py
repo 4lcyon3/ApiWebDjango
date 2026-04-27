@@ -24,22 +24,6 @@ class School(models.Model):
         return self.fullname
 
 # =====================
-# MODELO: SECCIÓN
-# =====================
-class Section(models.Model):
-    name = models.CharField(max_length=50, help_text="Ej: 1ro A, 2do B, 5to Ciencias")
-    school = models.ForeignKey(School, on_delete=models.CASCADE, related_name='sections')
-    grade_level = models.CharField(max_length=50, blank=True, null=True, help_text="Nivel educativo (Opcional)")
-    is_active = models.BooleanField(default=True)
-
-    class Meta:
-        unique_together = ('school', 'name') # Evita secciones duplicadas en el mismo colegio
-        ordering = ['name']
-
-    def __str__(self):
-        return f"{self.school.fullname} - {self.name}"
-
-# =====================
 # MODELO: PROFESOR
 # =====================
 class Teacher(AbstractUser):
@@ -59,6 +43,7 @@ class Teacher(AbstractUser):
 class Student(models.Model):
     first_name = models.CharField(max_length=50, default="SinNombre")
     last_name = models.CharField(max_length=50, default="SinApellido")
+    section = models.CharField(max_length=50, blank=True, null=True)
     puntaje = models.IntegerField(default=0, null=True, blank=True)
     promedio = models.DecimalField(max_digits=5, decimal_places=2, default=0.00) # type: ignore
     persistente_total = models.IntegerField(default=0)
